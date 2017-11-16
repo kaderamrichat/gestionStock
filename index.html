@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="assets/js/app.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <title>Gestion des stokcs</title>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Gestion des stocks</h1>
+      <aside>
+        <button>Acheter</button>
+        <button>Ajouter</button>
+        <button>Autres produits</button>
+        <button>Nouveau</button>
+        <button>promotion</button>
+      </aside>
+      <section class="formulaire">
+        <hr>
+        <form>
+          <h2>Entrez votre nouveau produit :</h2>
+          <div>
+              <label>Nom du produit :</label>
+              <input type="text" id="name">
+          </div>
+          <div>
+              <label>Description :</label>
+              <input type="text" id="desc">
+          </div>
+          <div>
+              <label>Couleur :</label>
+              <input type="text" id="color">
+          </div>
+          <div>
+              <label>Prix :</label>
+              <input type="text" id="price">
+          </div>
+        </form>
+        <button id="addProductBtn" class="btn btn-success">Ajouter nouveau produit</button>
+      </section>
+      <hr>
+      <section class="Afficher_produit">
+
+        <p>Liste des produits :</p>
+        <button type="button" id="toto" name="button" style="display:none">back</button>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Description</th>
+              <th>Couleur</th>
+              <th>Prix</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody id="afficher">
+
+          </tbody>
+        </table>
+      </section>
+      <hr>
+
+    </div>
+
+  <footer></footer>
+
+</body>
+</html>
