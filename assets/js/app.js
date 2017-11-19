@@ -8,7 +8,6 @@ var app = (function (){
   let stockArray = [{ref:100, name:"apple",desc:"Pour le dev & autre", color:"gris", price:2000},{ref:101, name:"pc",desc:"Pour le game & autre", color:"noir", price:1490}];
   //let stockArray = [];
 
-
   /**
    * Constructor qui va nous servir à créer les objets
    * @param       {Object} prod La ref est automatique & on attend les 4 autres paramètres
@@ -28,7 +27,7 @@ var app = (function (){
 
   /**
    * Fonction principale qui va appeler les autres
-   * @return {undefined} [description]
+   * @return {undefined} Renvoi rien
    */
   const start = function (){
     let elem = document.getElementById("addProductBtn");
@@ -39,54 +38,62 @@ var app = (function (){
   };
 
 
-//fonction création instance
+/**
+ * Fonction ajouter nouveau produit avec check sur les nom & les prix, les autres param sont optionnels
+ * @return {undefined} Renvoi rien
+ */
+
 //receiveVarXX -> pour les variable venant du formulaire
   function addNewProduct(){
-
-
     let receiveName   = document.getElementById("name");
     let receiveDesc   = document.getElementById("desc");
     let receiveColor  = document.getElementById("color");
     let receivePrice  = document.getElementById("price");
 
+    //checks
+    let nameChecked="",priceChecked="";
+    if (receiveName.value === "") {
+      document.getElementById("msgName").innerHTML = "Champ obligatoire";
+      receiveName.style.border = "2px solid #D11D05";
+    } else {
+      nameChecked = receiveName.value.trim();
+      document.getElementById("msgName").innerHTML = "";
+      receiveName.style.border = "";
+    }
 
-    //On enregriste dans l'object à la création de l'instace
+    if (isNaN(receivePrice.value) || (receivePrice.value === "") ) {
+        if(receivePrice.value === ""){
+          document.getElementById("msgPrice").innerHTML = "le champ ne doit pas être vide";
+          receivePrice.style.border = "2px solid #D11D05";
+        }
+        if(isNaN(receivePrice.value)){
+          document.getElementById("msgPrice").innerHTML = "le champ doit être un nombre";
+          receivePrice.style.border = "2px solid #D11D05";
+        }
+
+    } else {
+      priceChecked = receivePrice.value.trim();
+      document.getElementById("msgPrice").innerHTML = "";
+      receivePrice.style.border = "";
+    }
+
+    //On crèe l'instance et on l'enregistre dans le tableau
+    if ((nameChecked !== "") && priceChecked !== ""){
     productName = new Produit({
         ref  : id,
-        name : receiveName.value,//Trim() retire les blancs en début et fin de chaine
+        name : nameChecked,//Trim() retire les blancs en début et fin de chaine
         desc : receiveDesc.value,
         color: receiveColor.value,
-        price: receivePrice.value
+        price: priceChecked
     });
     id += 1;
-
-// On fait les checks sur les champs obligatoire avant de les insérer en base: le tableau
-    if ((receiveName.value === "") && (receivePrice.value === "")){
-        document.getElementById("msgName").innerHTML = "Champ obligatoire";
-        receiveName.style.border = "2px solid #D11D05";
-        document.getElementById("msgPrice").innerHTML = "Champ obligatoire et doit être un nombre";
-        receivePrice.style.border = "2px solid #D11D05";
-    } else if (receiveName.value === "") {
-        document.getElementById("msgName").innerHTML = "Champ obligatoire";
-        receiveName.style.border = "2px solid #D11D05";
-        document.getElementById("msgPrice").innerHTML = "";
-        receivePrice.style.border = "";
-    } else if (receivePrice.value === "") {
-        document.getElementById("msgPrice").innerHTML = "Champ obligatoire et doit être un nombre";
-        receivePrice.style.border = "2px solid #D11D05";
-        document.getElementById("msgName").innerHTML = "";
-        receiveName.style.border = "";
-    } else {
-        stockArray.push(productName);
-        document.getElementById("msgName").innerHTML = "";
-        receiveName.style.border = "";
-    }
-// || (receivePrice.value === ""))
-    // Rénitialise les champs
-    //receiveName.value = "";
+    stockArray.push(productName);
+    // On réinitialise les champs
+    receiveName.value = "";
     receiveDesc.value = "";
     receiveColor.value = "";
-    //receivePrice.value = "";
+    receivePrice.value = "";
+    }
     viewProduct();
   }
 
@@ -112,19 +119,23 @@ var app = (function (){
       }
   }
 
-  // <td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
- // function deleteItem(num){
- //     stockArray.splice(num,1);
- //     viewProduct();
- //   }
-
+/**
+ * Fonction de suppression de ligne
+ * @param  {number} num On récupère le numéro index au click
+ * @return {undefined}  retourne rien
+ */
  let deleteItem = (num) => {
      stockArray.splice(num, 1);
      viewProduct();
    };
 
+   /**
+    * Fonction de modification de ligne
+    * @param  {number} num On récupère le numéro index au click
+    * @return {undefined}  retourne rien
+    */
 let updateItem = (num) =>{
-  //console.log(Object.keys(stockArray[num]).length);
+
   let trOnGoing = document.querySelectorAll(".line");// selection des tr
   let countTD = trOnGoing[num].cells.length; //vaut 6
   console.log(countTD);
