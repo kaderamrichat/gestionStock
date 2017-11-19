@@ -1,4 +1,32 @@
-/*jshint esversion:6*/
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*jshint esversion:6*/
 /** @namespace */
 var app = (function (){
   "use strict";
@@ -6,13 +34,13 @@ var app = (function (){
   /*###### PARTIE DECLARATION DES VARIABLES */
   let id = 1; //Servira pour l'id unique
   let productName = "prod" + id;
-  let stockArray = [{ref:100, name:"apple",desc:"Pour le dev & autre", color:"gris", price:2000},{ref:101, name:"pc",desc:"Pour le game & autre", color:"noir", price:1490}];
+  let stockArray = [{ref:100, name:"apple",desc:"Pour le dev &amp; autre", color:"gris", price:2000},{ref:101, name:"pc",desc:"Pour le game &amp; autre", color:"noir", price:1490}];
   //let stockArray = [];
 
   /**
    * Constructor qui va nous servir à créer les objets
    * @alias app.Produit
-   * @param       {Object} prod La ref est automatique & on attend les 4 autres paramètres
+   * @param       {Object} prod La ref est automatique &amp; on attend les 4 autres paramètres
    * @constructor
    */
   let Produit = function Produit(prod){
@@ -42,7 +70,7 @@ var app = (function (){
 
 
 /**
- * Fonction ajouter nouveau produit avec check sur les nom & les prix, les autres param sont optionnels
+ * Fonction ajouter nouveau produit avec check sur les nom &amp; les prix, les autres param sont optionnels
  * @alias app.addNewProduct
  * @return {undefined} Renvoi rien
  */
@@ -82,7 +110,7 @@ var app = (function (){
     }
 
     //On crèe l'instance et on l'enregistre dans le tableau
-    if ((nameChecked !== "") && priceChecked !== ""){
+    if ((nameChecked !== "") &amp;&amp; priceChecked !== ""){
     productName = new Produit({
         ref  : id,
         name : nameChecked,//Trim() retire les blancs en début et fin de chaine
@@ -110,16 +138,16 @@ var app = (function (){
     let designRow = document.getElementById("afficher");
       if (stockArray.length >= 0){
         designRow.innerHTML = ""; //Vider avant d'afficher
-        for (let i=0; i < stockArray.length; i++){
+        for (let i=0; i &lt; stockArray.length; i++){
           designRow.innerHTML += `
-          <tr class="line">
-            <td>${stockArray[i].name}</td>
-            <td>${stockArray[i].desc}</td>
-            <td>${stockArray[i].color}</td>
-            <td>${stockArray[i].price}</td>
-            <td><i id="updtBtn" class="fa fa-pencil-square-o selected" aria-hidden="true" onclick="app.updateItem(${i})"></i></td>
-            <td><i id="supprBtn" class="fa fa-trash-o" aria-hidden="true" onclick="app.deleteItem(${i})" ></i></td>
-          </tr>`;
+          &lt;tr class="line">
+            &lt;td>${stockArray[i].name}&lt;/td>
+            &lt;td>${stockArray[i].desc}&lt;/td>
+            &lt;td>${stockArray[i].color}&lt;/td>
+            &lt;td>${stockArray[i].price}&lt;/td>
+            &lt;td>&lt;i id="updtBtn" class="fa fa-pencil-square-o selected" aria-hidden="true" onclick="app.updateItem(${i})">&lt;/i>&lt;/td>
+            &lt;td>&lt;i id="supprBtn" class="fa fa-trash-o" aria-hidden="true" onclick="app.deleteItem(${i})" >&lt;/i>&lt;/td>
+          &lt;/tr>`;
         }
       }
   }
@@ -147,16 +175,16 @@ let updateItem = (num) =>{
   let countTD = trOnGoing[num].cells.length; //vaut 6
   console.log(countTD);
   console.log(trOnGoing[num]);
-  trOnGoing[num].cells[0].innerHTML = `<input class="modify" id="updtName"type='text' value='${stockArray[num].name}'>`;
-  trOnGoing[num].cells[1].innerHTML = `<input class="modify" id="updtDesc"type='text' value='${stockArray[num].desc}'>`;
-  trOnGoing[num].cells[2].innerHTML = `<input class="modify" id="updtColor"type='text' value='${stockArray[num].color}'>`;
-  trOnGoing[num].cells[3].innerHTML = `<input class="modify" id="updtPrice"type='text' value='${stockArray[num].price}'>`;
-  trOnGoing[num].cells[4].innerHTML = '<i class="fa fa-check" aria-hidden="true" id="submit"></i>';
-  trOnGoing[num].cells[5].innerHTML = '<i class="fa fa-times" aria-hidden="true" id="cancel"></i';
+  trOnGoing[num].cells[0].innerHTML = `&lt;input class="modify" id="updtName"type='text' value='${stockArray[num].name}'>`;
+  trOnGoing[num].cells[1].innerHTML = `&lt;input class="modify" id="updtDesc"type='text' value='${stockArray[num].desc}'>`;
+  trOnGoing[num].cells[2].innerHTML = `&lt;input class="modify" id="updtColor"type='text' value='${stockArray[num].color}'>`;
+  trOnGoing[num].cells[3].innerHTML = `&lt;input class="modify" id="updtPrice"type='text' value='${stockArray[num].price}'>`;
+  trOnGoing[num].cells[4].innerHTML = '&lt;i class="fa fa-check" aria-hidden="true" id="submit">&lt;/i>';
+  trOnGoing[num].cells[5].innerHTML = '&lt;i class="fa fa-times" aria-hidden="true" id="cancel">&lt;/i';
 
   // Pour désactiver les autres boutons modifier
   var totaBtnAfterClick = document.querySelectorAll(".selected");
-  for (let i=0; i < totaBtnAfterClick.length; i++){
+  for (let i=0; i &lt; totaBtnAfterClick.length; i++){
     totaBtnAfterClick[i].onclick="";
   }
 
@@ -186,3 +214,26 @@ let updateItem = (num) =>{
     viewProduct
   };
 }());
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="app.Produit.html">Produit</a></li></ul><h3>Namespaces</h3><ul><li><a href="app.html">app</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Nov 19 2017 20:58:01 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
