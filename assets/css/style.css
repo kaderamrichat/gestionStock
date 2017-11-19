@@ -25,3 +25,24 @@ table td {
   /*padding: 5px;*/
   /*width: 115px;*/
 }
+
+.modify{
+  border:1px solid #BADA55;
+}
+#updtBtn, #supprBtn{
+    cursor: pointer;
+}
+
+#cancel{
+  cursor: pointer;
+  color:red;
+}
+#submit{
+  cursor: pointer;
+  color:green;
+}
+
+#msgName,#msgPrice{
+  color : #d11d05;
+  margin-left: 15px;
+}

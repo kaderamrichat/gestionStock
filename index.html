@@ -13,20 +13,20 @@
 <body>
   <div class="wrapper">
     <h1>Gestion des stocks</h1>
-      <header>
+      <!-- <header>
         <button>Acheter</button>
         <button>Ajouter</button>
         <button>Autres produits</button>
         <button>Nouveau</button>
         <button>promotion</button>
-      </header>
+      </header> -->
       <section class="formulaire">
         <hr>
-        <form>
+        <form id="formProduct">
           <h2>Entrez votre nouveau produit :</h2>
           <div>
-              <label>Nom du produit :</label>
-              <input type="text" id="name" value="produit par défaut">
+              <label>Nom du produit :  *</label>
+              <input type="text" id="name" value=""><span id="msgName"></span>
           </div>
           <div>
               <label>Description :</label>
@@ -37,8 +37,8 @@
               <input type="text" id="color">
           </div>
           <div>
-              <label>Prix :</label>
-              <input type="text" id="price">
+              <label>Prix :  *</label>
+              <input type="text" id="price"><span id="msgPrice"></span>
           </div>
         </form>
         <button id="addProductBtn" class="btn btn-success">Ajouter nouveau produit</button>

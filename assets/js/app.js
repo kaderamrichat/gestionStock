@@ -34,7 +34,7 @@ var app = (function (){
     let elem = document.getElementById("addProductBtn");
     elem.addEventListener("click", function(){
       addNewProduct();
-      viewProduct();
+      //viewProduct();
     });
   };
 
@@ -42,70 +42,119 @@ var app = (function (){
 //fonction création instance
 //receiveVarXX -> pour les variable venant du formulaire
   function addNewProduct(){
+
+
     let receiveName   = document.getElementById("name");
     let receiveDesc   = document.getElementById("desc");
     let receiveColor  = document.getElementById("color");
     let receivePrice  = document.getElementById("price");
 
+
+    //On enregriste dans l'object à la création de l'instace
     productName = new Produit({
         ref  : id,
-        name : receiveName.value.trim(),//Trim() retire les blancs en début et fin de chaine
+        name : receiveName.value,//Trim() retire les blancs en début et fin de chaine
         desc : receiveDesc.value,
         color: receiveColor.value,
         price: receivePrice.value
     });
     id += 1;
-    if (receiveName.value){
-      stockArray.push(productName);
-    } else {
-      console.log("Vous devez entrer une valeur pour name");
-    }
-    //arr.splice(1,1);
 
+// On fait les checks sur les champs obligatoire avant de les insérer en base: le tableau
+    if ((receiveName.value === "") && (receivePrice.value === "")){
+        document.getElementById("msgName").innerHTML = "Champ obligatoire";
+        receiveName.style.border = "2px solid #D11D05";
+        document.getElementById("msgPrice").innerHTML = "Champ obligatoire et doit être un nombre";
+        receivePrice.style.border = "2px solid #D11D05";
+    } else if (receiveName.value === "") {
+        document.getElementById("msgName").innerHTML = "Champ obligatoire";
+        receiveName.style.border = "2px solid #D11D05";
+        document.getElementById("msgPrice").innerHTML = "";
+        receivePrice.style.border = "";
+    } else if (receivePrice.value === "") {
+        document.getElementById("msgPrice").innerHTML = "Champ obligatoire et doit être un nombre";
+        receivePrice.style.border = "2px solid #D11D05";
+        document.getElementById("msgName").innerHTML = "";
+        receiveName.style.border = "";
+    } else {
+        stockArray.push(productName);
+        document.getElementById("msgName").innerHTML = "";
+        receiveName.style.border = "";
+    }
+// || (receivePrice.value === ""))
     // Rénitialise les champs
-    receiveName.value = "";
+    //receiveName.value = "";
     receiveDesc.value = "";
     receiveColor.value = "";
-    receivePrice.value = "";
-
-    //On affiche
+    //receivePrice.value = "";
+    viewProduct();
   }
 
-//afficher les produits
+/**
+ * Fonction d'affichage des produits.contenu dans le tableau
+ * @return {undefined}
+ */
   function viewProduct(){
-    //console.table(stockArray);
     let designRow = document.getElementById("afficher");
       if (stockArray.length >= 0){
         designRow.innerHTML = ""; //Vider avant d'afficher
         for (let i=0; i < stockArray.length; i++){
           designRow.innerHTML += `
-          <tr>
+          <tr class="line">
             <td>${stockArray[i].name}</td>
             <td>${stockArray[i].desc}</td>
             <td>${stockArray[i].color}</td>
             <td>${stockArray[i].price}</td>
-
-            <td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-            <td><a id="supprBtn" data-num =${i} onclick="app.deleteItem(${i})" class="deleteBtn" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+            <td><i id="updtBtn" class="fa fa-pencil-square-o selected" aria-hidden="true" onclick="app.updateItem(${i})"></i></td>
+            <td><i id="supprBtn" class="fa fa-trash-o" aria-hidden="true" onclick="app.deleteItem(${i})" ></i></td>
           </tr>`;
         }
       }
   }
 
-  // <td><button id="supprBtn" data-num =${i} onclick="app.deleteItem(${i})" class="deleteBtn" href="#">X</button></td>
-  // <td><a id="supprBtn${i}" class="deleteBtn" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+  // <td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+ // function deleteItem(num){
+ //     stockArray.splice(num,1);
+ //     viewProduct();
+ //   }
 
- function deleteItem(num){
-     // let deleteLink = document.querySelectorAll(".deleteBtn");
-     // let deleteLinkId = document.getElementById("supprBtn");
-     // console.log(num);
-
-     stockArray.splice(num,1);
+ let deleteItem = (num) => {
+     stockArray.splice(num, 1);
      viewProduct();
+   };
 
+let updateItem = (num) =>{
+  //console.log(Object.keys(stockArray[num]).length);
+  let trOnGoing = document.querySelectorAll(".line");// selection des tr
+  let countTD = trOnGoing[num].cells.length; //vaut 6
+  console.log(countTD);
+  console.log(trOnGoing[num]);
+  trOnGoing[num].cells[0].innerHTML = `<input class="modify" id="updtName"type='text' value='${stockArray[num].name}'>`;
+  trOnGoing[num].cells[1].innerHTML = `<input class="modify" id="updtDesc"type='text' value='${stockArray[num].desc}'>`;
+  trOnGoing[num].cells[2].innerHTML = `<input class="modify" id="updtColor"type='text' value='${stockArray[num].color}'>`;
+  trOnGoing[num].cells[3].innerHTML = `<input class="modify" id="updtPrice"type='text' value='${stockArray[num].price}'>`;
+  trOnGoing[num].cells[4].innerHTML = '<i class="fa fa-check" aria-hidden="true" id="submit"></i>';
+  trOnGoing[num].cells[5].innerHTML = '<i class="fa fa-times" aria-hidden="true" id="cancel"></i';
 
+  // Pour désactiver les autres boutons modifier
+  var totaBtnAfterClick = document.querySelectorAll(".selected");
+  for (let i=0; i < totaBtnAfterClick.length; i++){
+    totaBtnAfterClick[i].onclick="";
+  }
 
-   }
+  document.getElementById("cancel").addEventListener("click", function(){
+      viewProduct();
+  });
+
+  document.getElementById("submit").addEventListener("click", function(){
+        stockArray[num].name = updtName.value;
+        stockArray[num].desc = updtDesc.value;
+        stockArray[num].color = updtColor.value;
+        stockArray[num].price = updtPrice.value;
+      viewProduct();
+
+  });
+};
 
   window.onload = function (){
     start();
@@ -113,20 +162,9 @@ var app = (function (){
 
   };
   return {
-    deleteItem:deleteItem
+    //On renvoi les fonctions pour pouvoir les réutiliser
+    deleteItem:deleteItem,
+    updateItem:updateItem,
+    viewProduct
   };
 }());
-
-
-// lire le tableau 2
-
-// target le ul 3
-
-// click
-//
-// document.getElementById("clickList").onclik = function (){
-// }
-
-
-
-//
