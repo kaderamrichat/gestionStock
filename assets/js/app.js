@@ -1,11 +1,12 @@
 /*jshint esversion:6*/
-(function (){
+var app = (function (){
   "use strict";
 
   /*###### PARTIE DECLARATION DES VARIABLES */
   let id = 1; //Servira pour l'id unique
   let productName = "prod" + id;
   let stockArray = [{ref:100, name:"apple",desc:"Pour le dev & autre", color:"gris", price:2000},{ref:101, name:"pc",desc:"Pour le game & autre", color:"noir", price:1490}];
+  //let stockArray = [];
 
 
   /**
@@ -34,7 +35,6 @@
     elem.addEventListener("click", function(){
       addNewProduct();
       viewProduct();
-      deleteItem();
     });
   };
 
@@ -73,9 +73,9 @@
 
 //afficher les produits
   function viewProduct(){
-    console.table(stockArray);
+    //console.table(stockArray);
     let designRow = document.getElementById("afficher");
-      if (stockArray.length > 0){
+      if (stockArray.length >= 0){
         designRow.innerHTML = ""; //Vider avant d'afficher
         for (let i=0; i < stockArray.length; i++){
           designRow.innerHTML += `
@@ -86,30 +86,47 @@
             <td>${stockArray[i].price}</td>
 
             <td><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-            <td><a id="supprBtn${i}" class=""href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+            <td><a id="supprBtn" data-num =${i} onclick="app.deleteItem(${i})" class="deleteBtn" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
           </tr>`;
         }
       }
   }
 
- function deleteItem(){
-   //Effacer la ligne en cours
-      for (let i=0; i < stockArray.length; i++){
-          document.getElementById(`supprBtn${i}`).addEventListener("click", function(){
-              console.log("effacer");
-              stockArray.splice(i,1);
-              viewProduct();
-          });
-      }
-   //
- }
+  // <td><button id="supprBtn" data-num =${i} onclick="app.deleteItem(${i})" class="deleteBtn" href="#">X</button></td>
+  // <td><a id="supprBtn${i}" class="deleteBtn" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+
+ function deleteItem(num){
+     // let deleteLink = document.querySelectorAll(".deleteBtn");
+     // let deleteLinkId = document.getElementById("supprBtn");
+     // console.log(num);
+
+     stockArray.splice(num,1);
+     viewProduct();
+
+
+
+   }
 
   window.onload = function (){
     start();
     viewProduct();
-    deleteItem();
-
 
   };
-
+  return {
+    deleteItem:deleteItem
+  };
 }());
+
+
+// lire le tableau 2
+
+// target le ul 3
+
+// click
+//
+// document.getElementById("clickList").onclik = function (){
+// }
+
+
+
+//
